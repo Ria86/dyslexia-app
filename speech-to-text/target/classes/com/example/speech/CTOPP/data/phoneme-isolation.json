@@ -1,0 +1,52 @@
+[
+  {
+    "word": "cat",
+    "phoneme": "k",
+    "position": 1
+  },
+  {
+    "word": "dog",
+    "phoneme": "g",
+    "position": 3
+  },
+  {
+    "word": "fish",
+    "phoneme": "f",
+    "position": 1
+  },
+  {
+    "word": "sun",
+    "phoneme": "n",
+    "position": 3
+  },
+  {
+    "word": "map",
+    "phoneme": "m",
+    "position": 1
+  },
+  {
+    "word": "book",
+    "phoneme": "k",
+    "position": 3
+  },
+  {
+    "word": "hat",
+    "phoneme": "h",
+    "position": 1
+  },
+  {
+    "word": "leaf",
+    "phoneme": "f",
+    "position": 3
+  },
+  {
+    "word": "ten",
+    "phoneme": "t",
+    "position": 1
+  },
+  {
+    "word": "bed",
+    "phoneme": "d",
+    "position": 3
+  }
+]
