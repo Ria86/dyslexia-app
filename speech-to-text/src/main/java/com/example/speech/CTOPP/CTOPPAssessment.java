@@ -32,7 +32,7 @@ public class CTOPPAssessment {
         SoundMatchingTest.run();
 
 
-        System.out.println("\n📝 Assessment complete!");
+        System.out.println("\nAssessment complete!");
         System.out.println("You got " + correctAnswers + " out of " + totalQuestions + " questions correct.");
         double percent = ((double) correctAnswers / totalQuestions) * 100;
         System.out.printf("Score: %.1f%%\n", percent);

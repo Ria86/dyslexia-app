@@ -1,82 +1,42 @@
 [
   {
     "target": "cat",
-    "options": [
-      { "word": "cold", "image": "imgsource1" },
-      { "word": "book", "image": "imgsource2" },
-      { "word": "tent", "image": "imgsource3" }
-    ]
+    "options": [{ "word": "cold" }, { "word": "book" }, { "word": "tent" }]
   },
   {
     "target": "dog",
-    "options": [
-      { "word": "door", "image": "imgsource4" },
-      { "word": "pig", "image": "imgsource5" },
-      { "word": "hat", "image": "imgsource6" }
-    ]
+    "options": [{ "word": "door" }, { "word": "pig" }, { "word": "hat" }]
   },
   {
     "target": "fish",
-    "options": [
-      { "word": "fan", "image": "imgsource7" },
-      { "word": "bat", "image": "imgsource8" },
-      { "word": "cat", "image": "imgsource9" }
-    ]
+    "options": [{ "word": "fan" }, { "word": "bat" }, { "word": "cat" }]
   },
   {
     "target": "ball",
-    "options": [
-      { "word": "bat", "image": "imgsource10" },
-      { "word": "cat", "image": "imgsource11" },
-      { "word": "dog", "image": "imgsource12" }
-    ]
+    "options": [{ "word": "bat" }, { "word": "cat" }, { "word": "dog" }]
   },
   {
     "target": "sun",
-    "options": [
-      { "word": "sit", "image": "imgsource13" },
-      { "word": "run", "image": "imgsource14" },
-      { "word": "hat", "image": "imgsource15" }
-    ]
+    "options": [{ "word": "sit" }, { "word": "run" }, { "word": "hat" }]
   },
   {
     "target": "pen",
-    "options": [
-      { "word": "pig", "image": "imgsource16" },
-      { "word": "cat", "image": "imgsource17" },
-      { "word": "dog", "image": "imgsource18" }
-    ]
+    "options": [{ "word": "pig" }, { "word": "cat" }, { "word": "dog" }]
   },
   {
     "target": "car",
-    "options": [
-      { "word": "cow", "image": "imgsource19" },
-      { "word": "bus", "image": "imgsource20" },
-      { "word": "train", "image": "imgsource21" }
-    ]
+    "options": [{ "word": "cow" }, { "word": "bus" }, { "word": "train" }]
   },
   {
     "target": "tree",
-    "options": [
-      { "word": "truck", "image": "imgsource22" },
-      { "word": "boat", "image": "imgsource23" },
-      { "word": "plane", "image": "imgsource24" }
-    ]
+    "options": [{ "word": "truck" }, { "word": "boat" }, { "word": "plane" }]
   },
   {
     "target": "mouse",
-    "options": [
-      { "word": "moon", "image": "imgsource25" },
-      { "word": "cat", "image": "imgsource26" },
-      { "word": "dog", "image": "imgsource27" }
-    ]
+    "options": [{ "word": "moon" }, { "word": "cat" }, { "word": "dog" }]
   },
   {
     "target": "hat",
-    "options": [
-      { "word": "hand", "image": "imgsource28" },
-      { "word": "foot", "image": "imgsource29" },
-      { "word": "ear", "image": "imgsource30" }
-    ]
+    "options": [{ "word": "hand" }, { "word": "foot" }, { "word": "ear" }]
   }
 ]

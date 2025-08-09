@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
+import com.example.speech.StreamingMicTranscriber;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -14,31 +15,64 @@ import com.google.gson.JsonParser;
 public class PhonemeIsolationTest {
 
     public static void run() {
-        List<Question> questions = loadData("/CTOPP/data/phoneme-isolation.json");
+        List<Question> questions = loadData("/Users/aarushagrawal/Documents/dyslexiaApp/speech-to-text/src/main/java/com/example/speech/CTOPP/data/phoneme-isolation.json");
         Scanner scanner = new Scanner(System.in);
+
+        StreamingMicTranscriber transcriber;
+        try {
+            transcriber = new StreamingMicTranscriber();
+        } catch (Exception e) {
+            System.out.println("Failed to initialize microphone transcription: " + e.getMessage());
+            return;
+        }
+
         int total = 0, correct = 0;
 
         System.out.println("\nPhoneme Isolation Test");
-        Collections.shuffle(questions); //randomizes the order of the questions
+        Collections.shuffle(questions);
 
-        for (Question q : questions.subList(0, Math.min(10, questions.size()))) { //prints first 10 questions
+        for (Question q : questions.subList(0, Math.min(10, questions.size()))) {
             String word = q.word;
-            int index = q.position - 1; //finds the index of the target phoneme
+            int index = q.position - 1;
             if (index >= q.phonemes.size()) continue;
             String expected = q.phonemes.get(index);
 
-            System.out.printf("Say sound number %d in the word '%s':\n", q.position, word);
+            System.out.printf("\nSay sound number %d in the word '%s':\n", q.position, word);
+            System.out.println("Type '1' and press Enter to START recording your answer.");
+            String startCmd = scanner.nextLine();
 
-            System.out.print("Your answer: ");
-            String response = scanner.nextLine().trim().toLowerCase();
+            if (startCmd.equals("1")) {
+                try {
+                    transcriber.startListening();
+                    System.out.println("Recording started. Please wait a moment...");
+                    Thread.sleep(2000);  // brief pause to stabilize mic
+                } catch (Exception e) {
+                    System.out.println("Error starting recording: " + e.getMessage());
+                    continue;
+                }
 
-            total++;
-            if (response.equals(expected)) {
-                correct++;
+                System.out.println("Recording... Type '2' and press Enter to STOP recording.");
+                String stopCmd = scanner.nextLine();
+
+                if (stopCmd.equals("2")) {
+                    String response = "";
+                    try {
+                        response = transcriber.stopListeningAndGetTranscript();
+                    } catch (Exception e) {
+                        System.out.println("Error stopping recording: " + e.getMessage());
+                    }
+
+                    System.out.println("You said (transcript): " + response);
+
+                    total++;
+                    if (response.trim().toLowerCase().equals(expected.toLowerCase())) {
+                        correct++;
+                    }
+                }
             }
         }
 
-        System.out.printf("Score: %d/%d correct\n", correct, total);
+        System.out.printf("\nScore: %d/%d correct\n", correct, total);
     }
 
     private static List<Question> loadData(String path) {

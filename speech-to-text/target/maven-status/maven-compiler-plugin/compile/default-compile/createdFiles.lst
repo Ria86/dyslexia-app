@@ -1,1 +1,13 @@
+com/example/speech/CTOPP/Subtest/MemoryForDigitsTest.class
+com/example/speech/StreamingMicTranscriber.class
+com/example/speech/CTOPP/Subtest/PhonemeIsolationTest$Question.class
+com/example/speech/CTOPP/Subtest/PhonemeIsolationTest.class
+com/example/speech/CTOPP/Subtest/RapidSymbolicNamingTest.class
+com/example/speech/CTOPP/Subtest/SoundMatchingTest$Question$Option.class
+com/example/speech/StreamingMicTranscriber$1.class
+com/example/speech/CTOPP/Subtest/ElisionTest.class
+com/example/speech/CTOPP/Subtest/BlendingTest.class
+com/example/speech/CTOPP/Subtest/SoundMatchingTest.class
+com/example/speech/CTOPP/Subtest/SoundMatchingTest$Question.class
 com/example/speech/App.class
+com/example/speech/CTOPP/CTOPPAssessment.class

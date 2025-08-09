@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
+import com.example.speech.StreamingMicTranscriber;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -13,24 +14,59 @@ import com.google.gson.JsonParser;
 public class MemoryForDigitsTest {
 
     public static void run() {
-        List<String> digitSequences = loadData("/CTOPP/data/memory-digits.json");
+        List<String> digitSequences = loadData("/Users/aarushagrawal/Documents/dyslexiaApp/speech-to-text/src/main/java/com/example/speech/CTOPP/data/memory-digits.json");
         Scanner scanner = new Scanner(System.in);
+
+        StreamingMicTranscriber transcriber;
+        try {
+            transcriber = new StreamingMicTranscriber();
+        } catch (Exception e) {
+            System.out.println("Failed to initialize microphone transcription: " + e.getMessage());
+            return;
+        }
+
         int total = 0, correct = 0;
 
         System.out.println("Memory for Digits Test");
 
-        Collections.shuffle(digitSequences); //randomizes the order of the list
-        List<String> selected = digitSequences.subList(0, Math.min(10, digitSequences.size())); //stores the first 10 list items in selected
+        Collections.shuffle(digitSequences);
+        List<String> selected = digitSequences.subList(0, Math.min(10, digitSequences.size()));
 
         for (String sequence : selected) {
-            System.out.printf("Listen to this sequence of digits and repeat it back:\n%s\n", sequence);
-            System.out.print("Your answer: ");
-            String response = scanner.nextLine().trim().replaceAll("\\s+", ""); //formats the user's response to remove whitespaces
+            System.out.printf("\nListen to this sequence of digits and repeat it back:\n%s\n", sequence);
+            System.out.println("Type '1' and press Enter to START recording your answer.");
+            String startCmd = scanner.nextLine();
 
-            total++;
-            if (response.equals(sequence)) {
-                correct++;
-            } 
+            if (startCmd.equals("1")) {
+                try {
+                    transcriber.startListening();
+                    System.out.println("Recording started. Please wait a moment...");
+                    Thread.sleep(2000); // stabilize mic before speaking
+                } catch (Exception e) {
+                    System.out.println("Error starting recording: " + e.getMessage());
+                    continue;
+                }
+
+                System.out.println("Recording... Type '2' and press Enter to STOP recording.");
+                String stopCmd = scanner.nextLine();
+
+                if (stopCmd.equals("2")) {
+                    String response = "";
+                    try {
+                        response = transcriber.stopListeningAndGetTranscript();
+                    } catch (Exception e) {
+                        System.out.println("Error stopping recording: " + e.getMessage());
+                    }
+
+                    System.out.println("You said (transcript): " + response);
+
+                    total++;
+                    String normalizedResponse = response.replaceAll("\\s+", "");
+                    if (normalizedResponse.equals(sequence)) {
+                        correct++;
+                    }
+                }
+            }
         }
 
         System.out.printf("\nYour Score: %d out of %d correct\n", correct, total);

@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
+import com.example.speech.StreamingMicTranscriber;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -28,32 +29,64 @@ public class SoundMatchingTest {
     }
 
     public static void run() {
-        List<Question> questions = loadData("/CTOPP/data/sound-matching.json");
+        List<Question> questions = loadData("/Users/aarushagrawal/Documents/dyslexiaApp/speech-to-text/src/main/java/com/example/speech/CTOPP/data/sound-matching.json");
         Scanner scanner = new Scanner(System.in);
+
+        StreamingMicTranscriber transcriber;
+        try {
+            transcriber = new StreamingMicTranscriber();
+        } catch (Exception e) {
+            System.out.println("Failed to initialize microphone transcription: " + e.getMessage());
+            return;
+        }
+
         int total = 0, correct = 0;
 
         System.out.println("\nSound Matching Test");
 
         Collections.shuffle(questions);
-        for (Question q : questions.subList(0, Math.min(10, questions.size()))) {
+        for (Question q : questions.subList(0, Math.min(3, questions.size()))) {
             System.out.printf("\nSelect the word that begins with the same sound as '%s':\n", q.targetWord);
 
             for (int i = 0; i < q.options.size(); i++) {
                 System.out.printf("%d: %s\n", i + 1, q.options.get(i).word);
             }
 
-            System.out.print("Your choice (1-3): ");
-            String input = scanner.nextLine().trim();
-            int choice = -1;
-            try {
-                choice = Integer.parseInt(input);
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input.");
-            }
+            System.out.println("Type '1' and press Enter to START recording your answer.");
+            String startCmd = scanner.nextLine();
 
-            total++;
-            if (choice == 1) {  // First option is always correct
-                correct++;
+            if ("1".equals(startCmd)) {
+                try {
+                    transcriber.startListening();
+                    System.out.println("Recording started. Please wait a moment...");
+                    Thread.sleep(2000);  // pause before recording your answer
+                } catch (Exception e) {
+                    System.out.println("Error starting recording: " + e.getMessage());
+                    continue;
+                }
+
+                System.out.println("Recording... Type '2' and press Enter to STOP recording.");
+                String stopCmd = scanner.nextLine();
+
+                if ("2".equals(stopCmd)) {
+                    String transcript = "";
+                    try {
+                        transcript = transcriber.stopListeningAndGetTranscript().trim().toLowerCase();
+                    } catch (Exception e) {
+                        System.out.println("Error stopping recording: " + e.getMessage());
+                    }
+
+                    System.out.println("You said: " + transcript);
+
+                    // Check if transcript matches the correct answer (option 1 word)
+                    total++;
+                    if (transcript.contains(q.options.get(0).word.toLowerCase())) {
+                        correct++;
+                        System.out.println("Correct!");
+                    } else {
+                        System.out.println("Incorrect. Correct answer was: " + q.options.get(0).word);
+                    }
+                }
             }
         }
 
